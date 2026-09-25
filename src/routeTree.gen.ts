@@ -15,6 +15,8 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DoctorRouteImport } from './routes/doctor'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as PanchakarmaRouteImport } from './routes/panchakarma'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TreatmentsRouteImport } from './routes/treatments'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +49,16 @@ const PanchakarmaRoute = PanchakarmaRouteImport.update({
   path: '/panchakarma',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TreatmentsRoute = TreatmentsRouteImport.update({
   id: '/treatments',
   path: '/treatments',
@@ -60,6 +72,8 @@ export interface FileRoutesByFullPath {
   '/doctor': typeof DoctorRoute
   '/gallery': typeof GalleryRoute
   '/panchakarma': typeof PanchakarmaRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/treatments': typeof TreatmentsRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +83,8 @@ export interface FileRoutesByTo {
   '/doctor': typeof DoctorRoute
   '/gallery': typeof GalleryRoute
   '/panchakarma': typeof PanchakarmaRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/treatments': typeof TreatmentsRoute
 }
 export interface FileRoutesById {
@@ -79,6 +95,8 @@ export interface FileRoutesById {
   '/doctor': typeof DoctorRoute
   '/gallery': typeof GalleryRoute
   '/panchakarma': typeof PanchakarmaRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/treatments': typeof TreatmentsRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +108,8 @@ export interface FileRouteTypes {
     | '/doctor'
     | '/gallery'
     | '/panchakarma'
+    | '/privacy'
+    | '/terms'
     | '/treatments'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +119,8 @@ export interface FileRouteTypes {
     | '/doctor'
     | '/gallery'
     | '/panchakarma'
+    | '/privacy'
+    | '/terms'
     | '/treatments'
   id:
     | '__root__'
@@ -108,6 +130,8 @@ export interface FileRouteTypes {
     | '/doctor'
     | '/gallery'
     | '/panchakarma'
+    | '/privacy'
+    | '/terms'
     | '/treatments'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +142,8 @@ export interface RootRouteChildren {
   DoctorRoute: typeof DoctorRoute
   GalleryRoute: typeof GalleryRoute
   PanchakarmaRoute: typeof PanchakarmaRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   TreatmentsRoute: typeof TreatmentsRoute
 }
 
@@ -165,6 +191,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PanchakarmaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/treatments': {
       id: '/treatments'
       path: '/treatments'
@@ -182,6 +222,8 @@ const rootRouteChildren: RootRouteChildren = {
   DoctorRoute: DoctorRoute,
   GalleryRoute: GalleryRoute,
   PanchakarmaRoute: PanchakarmaRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   TreatmentsRoute: TreatmentsRoute,
 }
 export const routeTree = rootRouteImport
