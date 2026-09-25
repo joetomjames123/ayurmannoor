@@ -166,7 +166,7 @@
 .nav-link { position: relative; padding-block: .5rem; }
 .nav-link::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; transform: scaleX(0); transform-origin: right; background: currentColor; transition: transform .3s ease; }
 .nav-link:hover::after, .nav-link.is-active::after { transform: scaleX(1); transform-origin: left; }
-.bg-hero-overlay { background: linear-gradient(90deg, color-mix(in oklab, var(--foreground) 70%, transparent), color-mix(in oklab, var(--foreground) 8%, transparent) 70%); }
+.bg-hero-overlay { background: linear-gradient(180deg, color-mix(in oklab, var(--foreground) 48%, transparent), transparent 24%), linear-gradient(90deg, color-mix(in oklab, var(--foreground) 70%, transparent), color-mix(in oklab, var(--foreground) 8%, transparent) 70%); }
 .bg-image-overlay { background: linear-gradient(0deg, color-mix(in oklab, var(--foreground) 72%, transparent), transparent 75%); }
 .bg-gallery-overlay { background-color: color-mix(in oklab, var(--foreground) 94%, transparent); }
 .form-field { display: grid; gap: .7rem; border-bottom: 1px solid var(--color-border); padding-block: 1.1rem; }
@@ -177,6 +177,6 @@
 .animate-gentle-bob { animation: gentle-bob 2.4s ease-in-out infinite; }
 /* These positions can be retuned for a future dedicated portrait cut of the supplied film. */
 .hero-video { object-position: var(--hero-video-position-desktop, center center); }
-@media (max-width: 640px) { .hero-video { object-position: var(--hero-video-position-mobile, 58% center); } .bg-hero-overlay { background: linear-gradient(0deg, color-mix(in oklab, var(--foreground) 88%, transparent), color-mix(in oklab, var(--foreground) 30%, transparent) 75%); } }
+@media (max-width: 640px) { .hero-video { object-position: var(--hero-video-position-mobile, 58% center); } .bg-hero-overlay { background: linear-gradient(180deg, color-mix(in oklab, var(--foreground) 50%, transparent), transparent 26%), linear-gradient(0deg, color-mix(in oklab, var(--foreground) 88%, transparent), color-mix(in oklab, var(--foreground) 30%, transparent) 75%); } }
 @media (min-width: 641px) and (max-width: 1024px) { .hero-video { object-position: var(--hero-video-position-tablet, 54% center); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
