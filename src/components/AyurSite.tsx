@@ -5,6 +5,7 @@ import { useEffect, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import heroVideo from "@/assets/ayur-mannoor-hero-fast.mp4.asset.json";
+import heroWebm from "@/assets/ayur-mannoor-hero.webm.asset.json";
 import heroPoster from "@/assets/ayur-mannoor-poster.jpg.asset.json";
 import doctorPhoto from "@/assets/dr-anupam-mathew.jpeg.asset.json";
 import treatmentRoom from "@/assets/treatment-room.jpg";
@@ -84,7 +85,7 @@ function Footer() {
 export function Hero() {
   const reduce = useReducedMotion();
   return <section className="relative min-h-[92svh] overflow-hidden bg-primary text-hero">
-    <video className="absolute inset-0 h-full w-full object-cover object-center hero-video" autoPlay loop muted playsInline preload="metadata" poster={heroPoster.url} aria-label="AYUR MANNOOR brand film"><source src={heroVideo.url} type="video/mp4" /></video>
+    <video className="absolute inset-0 h-full w-full object-cover object-center hero-video" autoPlay loop muted playsInline preload="auto" poster={heroPoster.url} aria-label="AYUR MANNOOR brand film"><source src={heroWebm.url} type="video/webm" /><source src={heroVideo.url} type="video/mp4" /></video>
     <div className="absolute inset-0 bg-hero-overlay" />
     <div className="relative mx-auto flex min-h-[92svh] max-w-[1500px] items-end px-5 pb-[max(3.5rem,env(safe-area-inset-bottom))] pt-32 sm:px-8 lg:px-12 lg:pb-16">
       <div className="max-w-4xl">
