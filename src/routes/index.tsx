@@ -1,24 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { HomePage } from "@/components/AyurSite";
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [
+    { title: "AYUR MANNOOR | Ayurvedic Clinic & Treatment Centre in Kannur" },
+    { name: "description", content: "AYUR MANNOOR is an Ayurvedic Clinic & Treatment Centre in Meenpatti, Karuvanchal, Kannur, offering Ayurvedic consultation and traditional wellness therapies." },
+    { property: "og:title", content: "AYUR MANNOOR | Ayurvedic Clinic & Treatment Centre in Kannur" },
+    { property: "og:description", content: "Traditional Ayurvedic consultation and wellness therapies in Meenpatti, Karuvanchal, Kannur." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ], links: [{ rel: "canonical", href: "/" }] }),
+  component: HomePage,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
