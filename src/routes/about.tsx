@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, BookingBand } from "@/components/AyurSite";
-import veranda from "@/assets/kerala-veranda.jpg";
 import details from "@/assets/ayurveda-details.jpg";
 import doctor from "@/assets/dr-anupam-mathew.jpeg.asset.json";
 export const Route = createFileRoute("/about")({ head: () => ({ meta: [

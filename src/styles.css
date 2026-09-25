@@ -41,7 +41,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-foreground: var(--gold);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -62,7 +62,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-hero: var(--hero);
-  --color-accent-foreground: var(--gold);
   --shadow-lift: 0 12px 35px color-mix(in oklab, var(--foreground) 18%, transparent);
 }
 
@@ -176,6 +175,8 @@
 .form-field textarea { resize: vertical; }
 @keyframes gentle-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(.4rem)} }
 .animate-gentle-bob { animation: gentle-bob 2.4s ease-in-out infinite; }
-@media (max-width: 640px) { .hero-video { object-position: 58% center; } .bg-hero-overlay { background: linear-gradient(0deg, color-mix(in oklab, var(--foreground) 88%, transparent), color-mix(in oklab, var(--foreground) 30%, transparent) 75%); } }
-@media (min-width: 641px) and (max-width: 1024px) { .hero-video { object-position: 54% center; } }
+/* These positions can be retuned for a future dedicated portrait cut of the supplied film. */
+.hero-video { object-position: var(--hero-video-position-desktop, center center); }
+@media (max-width: 640px) { .hero-video { object-position: var(--hero-video-position-mobile, 58% center); } .bg-hero-overlay { background: linear-gradient(0deg, color-mix(in oklab, var(--foreground) 88%, transparent), color-mix(in oklab, var(--foreground) 30%, transparent) 75%); } }
+@media (min-width: 641px) and (max-width: 1024px) { .hero-video { object-position: var(--hero-video-position-tablet, 54% center); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

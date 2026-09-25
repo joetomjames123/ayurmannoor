@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowRight, Menu, Phone, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -65,7 +65,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
     </motion.div>}</AnimatePresence>
     <main>{children}</main>
     <Footer />
-    <a href={clinic.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with AYUR MANNOOR on WhatsApp" className="group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-lift transition-transform hover:scale-105 sm:right-6"><span className="text-xs font-semibold">WA</span><span className="pointer-events-none absolute right-14 hidden whitespace-nowrap bg-primary px-3 py-2 text-xs group-hover:block">Chat with AYUR MANNOOR</span></a>
+    <a href={clinic.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with AYUR MANNOOR on WhatsApp" className="group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-lift transition-transform hover:scale-105 sm:right-6"><MessageCircle className="size-5" aria-hidden="true"/><span className="pointer-events-none absolute right-14 hidden whitespace-nowrap bg-primary px-3 py-2 text-xs group-hover:block">Chat with AYUR MANNOOR</span></a>
   </>;
 }
 
@@ -76,7 +76,7 @@ function Footer() {
       <div className="mt-14 grid gap-10 border-t border-primary-foreground/20 pt-8 md:grid-cols-3">
         <p className="text-sm leading-7 text-primary-foreground/70">Ayurvedic Clinic & Treatment Centre<br/>Meenpatti, Karuvanchal, Kannur, Kerala</p>
         <nav className="grid grid-cols-2 gap-x-5 gap-y-2 text-sm">{nav.map(([label,to]) => <Link key={to} to={to}>{label}</Link>)}</nav>
-        <div className="md:text-right"><a href={clinic.phoneLink} className="font-display text-2xl">{clinic.phone}</a><p className="mt-6 text-xs text-primary-foreground/60">© AYUR MANNOOR. All rights reserved.</p></div>
+        <div className="md:text-right"><a href={clinic.phoneLink} className="font-display text-2xl">{clinic.phone}</a><p className="mt-6 text-xs text-primary-foreground/60">© AYUR MANNOOR. All rights reserved.</p><div className="mt-4 flex gap-5 text-xs text-primary-foreground/70 md:justify-end"><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms</Link></div></div>
       </div>
     </div>
   </footer>;
@@ -99,7 +99,8 @@ export function Hero() {
 }
 
 export function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>;
+  const reduce = useReducedMotion();
+  return <motion.div initial={reduce ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>;
 }
 
 export function HomePage() {
