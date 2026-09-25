@@ -1,5 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HomePage } from "@/components/AyurSite";
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  name: "AYUR MANNOOR",
+  description: "Ayurvedic Clinic & Treatment Centre",
+  telephone: "+91 75599 55181",
+  address: { "@type": "PostalAddress", streetAddress: "Meenpatti, Karuvanchal", addressLocality: "Kannur", addressRegion: "Kerala", addressCountry: "IN" },
+};
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
     { title: "AYUR MANNOOR | Ayurvedic Clinic & Treatment Centre in Kannur" },
@@ -8,5 +16,5 @@ export const Route = createFileRoute("/")({
     { property: "og:description", content: "Traditional Ayurvedic consultation and wellness therapies in Meenpatti, Karuvanchal, Kannur." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ], links: [{ rel: "canonical", href: "/" }] }),
-  component: HomePage,
+  component: () => <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }} /><HomePage /></>,
 });
