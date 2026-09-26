@@ -1,3 +1,3 @@
-- [ ] Show the five supplied clinic photographs in the home gallery and gallery page; replace duplicate doctor imagery elsewhere.
-- [ ] Remove website booking and enquiry form; direct consultation enquiries to phone and WhatsApp.
-- [ ] Verify clinic photos, doctor placement, and contact actions in preview.
+- [x] Show the five supplied clinic photographs in the home gallery and gallery page; replace duplicate doctor imagery elsewhere.
+- [x] Remove website booking and enquiry form; direct consultation enquiries to phone and WhatsApp.
+- [x] Verify clinic photos, doctor placement, and contact actions in preview.
