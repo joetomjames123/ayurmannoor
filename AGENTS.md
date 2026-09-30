@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep AYUR MANNOOR as a multi-route editorial site with shared navigation/footer; distinct routes support direct sharing and search discovery.
-- Uploaded binary media is stored through Lovable Assets pointers; this keeps the repository lightweight while preserving exact supplied files.
+- Uploaded photos and video files live in `src/assets/` as real binaries imported by Vite, not CDN pointers, so the repository is self-contained on GitHub.
 - The uploaded film is remuxed to MP4 and transcoded to WebM with WebM first and MP4 fallback; a portrait crop of that same film is served on phones. Chromium could not begin playback of the supplied MP4 alone, while the WebM version autoplays.
 - Consultation enquiries go directly through telephone or WhatsApp links, without a website form or booking flow; this avoids implying appointments can be booked online.
 - Use the supplied authentic clinic photographs for clinic spaces, and reserve the doctor portrait for the doctor-introduction section only; this prevents illustrative imagery or repeated portraits from misrepresenting the clinic.
