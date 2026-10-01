@@ -1,3 +1,6 @@
 - [x] Show the five supplied clinic photographs in the home gallery and gallery page; replace duplicate doctor imagery elsewhere.
 - [x] Remove website booking and enquiry form; direct consultation enquiries to phone and WhatsApp.
 - [x] Verify clinic photos, doctor placement, and contact actions in preview.
+- [x] Refine mobile layouts, text sizing, navigation, and touch interactions across all pages.
+- [x] Verify phone and desktop layouts, media, and contact actions in preview.
+- [x] Check GitHub/Vercel delivery status and explain any deployment step outside this project.

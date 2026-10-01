@@ -53,11 +53,17 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   useEffect(() => setOpen(false), [path]);
+  useEffect(() => {
+    if (!open) return;
+    const onEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    document.addEventListener("keydown", onEscape);
+    return () => document.removeEventListener("keydown", onEscape);
+  }, [open]);
   const light = isHome && !scrolled && !open;
 
   return <>
-    <header className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${light ? "border-transparent bg-transparent text-hero" : "border-border/70 bg-background/95 text-foreground backdrop-blur-md"}`}>
-      <div className="mx-auto grid h-20 max-w-[1500px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 sm:px-8 lg:h-24 lg:grid-cols-[auto_1fr_auto] lg:px-12">
+    <header className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${open ? "border-primary-foreground/20 bg-primary text-primary-foreground" : light ? "border-transparent bg-transparent text-hero" : "border-border/70 bg-background/95 text-foreground backdrop-blur-md"}`}>
+      <div className="mx-auto grid h-20 max-w-[1500px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 pt-[env(safe-area-inset-top)] sm:px-8 lg:h-24 lg:grid-cols-[auto_1fr_auto] lg:px-12">
         <Link to="/" className="min-w-0 font-display text-xl leading-none tracking-wide sm:text-2xl">AYUR MANNOOR</Link>
         <nav className="mx-auto hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
           {nav.map(([label, to]) => <Link key={to} to={to} className="nav-link text-[11px] uppercase tracking-[0.12em]" activeProps={{ className: "nav-link is-active text-[11px] uppercase tracking-[0.12em]" }}>{label}</Link>)}
@@ -66,13 +72,13 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         <Button variant="ghost" size="icon" aria-label={open ? "Close menu" : "Open menu"} className="justify-self-end lg:hidden" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
       </div>
     </header>
-    <AnimatePresence>{open && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 flex min-h-dvh flex-col bg-primary px-6 pb-[max(2rem,env(safe-area-inset-bottom))] pt-28 text-primary-foreground lg:hidden">
-      <nav className="flex flex-1 flex-col justify-center gap-4" aria-label="Mobile navigation">{nav.map(([label, to], index) => <motion.div key={to} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .04 }}><Link to={to} className="font-display text-4xl sm:text-5xl">{label}</Link></motion.div>)}</nav>
-      <Button asChild variant="outline" className="h-12 rounded-none border-primary-foreground/40 bg-transparent text-primary-foreground"><a href={clinic.phoneLink}>Call the clinic</a></Button>
+    <AnimatePresence>{open && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 flex h-dvh flex-col overflow-y-auto bg-primary px-6 pb-[max(6rem,env(safe-area-inset-bottom))] pt-[calc(6.5rem+env(safe-area-inset-top))] text-primary-foreground lg:hidden">
+      <nav className="flex flex-1 flex-col justify-center gap-3 py-4" aria-label="Mobile navigation">{nav.map(([label, to], index) => <motion.div key={to} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .04 }}><Link to={to} className="block py-1 font-display text-4xl sm:text-5xl">{label}</Link></motion.div>)}</nav>
+      <Button asChild variant="outline" className="h-12 shrink-0 rounded-none border-primary-foreground/40 bg-transparent text-primary-foreground"><a href={clinic.phoneLink}>Call the clinic</a></Button>
     </motion.div>}</AnimatePresence>
     <main>{children}</main>
     <Footer />
-    <a href={clinic.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with AYUR MANNOOR on WhatsApp" className="group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-lift transition-transform hover:scale-105 sm:right-6"><MessageCircle className="size-5" aria-hidden="true"/><span className="pointer-events-none absolute right-14 hidden whitespace-nowrap bg-primary px-3 py-2 text-xs group-hover:block">Chat with AYUR MANNOOR</span></a>
+    {!open && <><div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 border-t border-border bg-background pb-[env(safe-area-inset-bottom)] shadow-lift md:hidden"><a href={clinic.phoneLink} className="flex h-14 items-center justify-center gap-2 border-r border-border text-sm font-semibold"><Phone className="size-4" aria-hidden="true"/>Call</a><a href={clinic.whatsapp} target="_blank" rel="noreferrer" className="flex h-14 items-center justify-center gap-2 text-sm font-semibold"><MessageCircle className="size-4" aria-hidden="true"/>WhatsApp</a></div><a href={clinic.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with AYUR MANNOOR on WhatsApp" className="group fixed bottom-6 right-6 z-30 hidden h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-lift transition-transform hover:scale-105 md:grid"><MessageCircle className="size-5" aria-hidden="true"/><span className="pointer-events-none absolute right-14 hidden whitespace-nowrap bg-primary px-3 py-2 text-xs group-hover:block">Chat with AYUR MANNOOR</span></a></>}
   </>;
 }
 
@@ -94,10 +100,10 @@ export function Hero() {
   return <section className="relative min-h-[92svh] overflow-hidden bg-primary text-hero">
     <video className="absolute inset-0 h-full w-full object-cover object-center hero-video" autoPlay loop muted playsInline preload="auto" poster={heroPoster} aria-label="AYUR MANNOOR brand film"><source media="(max-width: 640px)" src={heroMobileWebm} type="video/webm" /><source media="(max-width: 640px)" src={heroMobile} type="video/mp4" /><source src={heroWebm} type="video/webm" /><source src={heroVideo} type="video/mp4" /></video>
     <div className="absolute inset-0 bg-hero-overlay" />
-    <div className="relative mx-auto flex min-h-[92svh] max-w-[1500px] items-end px-5 pb-[max(3.5rem,env(safe-area-inset-bottom))] pt-32 sm:px-8 lg:px-12 lg:pb-16">
+    <div className="relative mx-auto flex min-h-[92svh] max-w-[1500px] items-end px-5 pb-[max(5.5rem,env(safe-area-inset-bottom))] pt-32 sm:px-8 md:pb-16 lg:px-12">
       <div className="max-w-4xl">
         <motion.p initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .25 }} className="mb-5 text-[10px] uppercase tracking-[.22em] sm:text-xs">Ayurvedic Clinic & Treatment Centre</motion.p>
-        <motion.h1 initial={reduce ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: .4 }} className="font-display text-[clamp(4rem,9vw,8.5rem)] leading-[.82]">The Art of<br/><span className="italic font-normal">Ayurvedic</span> Wellbeing</motion.h1>
+        <motion.h1 initial={reduce ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: .4 }} className="font-display text-[clamp(3.5rem,9vw,8.5rem)] leading-[.86]">The Art of<br/><span className="italic font-normal">Ayurvedic</span> Wellbeing</motion.h1>
         <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: .8 }} className="mt-7 grid gap-6 sm:grid-cols-[minmax(0,30rem)_auto] sm:items-end"><p className="max-w-md text-sm leading-7 text-hero/85 sm:text-base">Traditional wisdom, personalized care, and a deeper connection with wellbeing.</p><div className="flex flex-wrap gap-3"><Button asChild className="h-12 rounded-none bg-hero px-5 text-foreground hover:bg-hero/90"><a href={clinic.phoneLink}>Call the clinic</a></Button><Button asChild variant="outline" className="h-12 rounded-none border-hero/50 bg-transparent px-5 text-hero hover:bg-hero hover:text-foreground"><Link to="/treatments">Explore treatments</Link></Button></div></motion.div>
       </div>
       <ArrowDown className="absolute bottom-8 right-6 hidden size-5 animate-gentle-bob lg:block" aria-hidden="true" />
@@ -141,6 +147,6 @@ export function GalleryStrip() { const imgs=[[clinicExterior,"Exterior of AYUR M
 
 export function BookingBand() { return <section className="section bg-accent text-accent-foreground"><Reveal className="mx-auto max-w-5xl text-center"><Eyebrow>Begin your journey</Eyebrow><h2 className="display-title">A considered first step towards balance.</h2><p className="mx-auto mt-6 max-w-xl body-copy">Speak with AYUR MANNOOR about consultation and treatments by phone or WhatsApp.</p><div className="mt-9 flex flex-wrap justify-center gap-3"><Button asChild className="h-12 rounded-none px-7"><a href={clinic.phoneLink}>Call the clinic</a></Button><Button asChild variant="outline" className="h-12 rounded-none px-7"><a href={clinic.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a></Button></div></Reveal></section>; }
 
-export function PageIntro({ eyebrow, title, text, image }: { eyebrow:string; title:string; text?:string; image?:string }) { return <section className="page-intro"><div className="mx-auto grid max-w-[1400px] items-end gap-10 lg:grid-cols-[1fr_.65fr]"><Reveal><Eyebrow>{eyebrow}</Eyebrow><h1 className="font-display text-[clamp(4.5rem,10vw,10rem)] leading-[.8]">{title}</h1></Reveal>{text&&<Reveal><p className="max-w-md body-copy">{text}</p></Reveal>}</div>{image&&<img src={image} alt="" className="mx-auto mt-16 aspect-[16/7] max-h-[680px] w-full max-w-[1600px] object-cover"/>}</section>; }
+export function PageIntro({ eyebrow, title, text, image }: { eyebrow:string; title:string; text?:string; image?:string }) { return <section className="page-intro"><div className="mx-auto grid max-w-[1400px] items-end gap-7 md:gap-10 lg:grid-cols-[1fr_.65fr]"><Reveal><Eyebrow>{eyebrow}</Eyebrow><h1 className="font-display text-[3.75rem] leading-[.86] sm:text-[5.5rem] lg:text-[clamp(6rem,8vw,10rem)]">{title}</h1></Reveal>{text&&<Reveal><p className="max-w-md body-copy">{text}</p></Reveal>}</div>{image&&<img src={image} alt="" className="mx-auto mt-10 aspect-[4/3] max-h-[680px] w-full max-w-[1600px] object-cover sm:mt-16 sm:aspect-[16/7]"/>}</section>; }
 
 export function ContactPage() { return <><PageIntro eyebrow="Contact" title="Begin your journey towards balance." text="Contact AYUR MANNOOR directly by phone or WhatsApp to enquire about consultation and treatments."/><section className="section pt-0"><div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-2 lg:items-center"><div><Eyebrow>Visit us</Eyebrow><address className="font-display text-4xl not-italic leading-tight">Meenpatti, Karuvanchal,<br/>Kannur, Kerala, India</address><a href={clinic.phoneLink} className="mt-8 flex items-center gap-3 text-lg"><Phone className="size-4"/>{clinic.phone}</a><div className="mt-8 flex flex-wrap gap-3"><Button asChild className="rounded-none"><a href={clinic.phoneLink}>Call the clinic</a></Button><Button asChild variant="outline" className="rounded-none"><a href={clinic.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a></Button><Button asChild variant="outline" className="rounded-none"><a href={clinic.directions} target="_blank" rel="noreferrer">Get directions</a></Button></div></div><img src={clinicExterior} alt="Exterior of AYUR MANNOOR clinic in Karuvanchal" loading="lazy" className="aspect-[4/3] w-full object-cover object-center"/></div></section></>; }
